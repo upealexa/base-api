@@ -1,4 +1,5 @@
 var express = require('express');
+var i18n = require('./i18n');
 var cors = require('cors');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -12,7 +13,7 @@ require('./models/User');
 require('./config/passport');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var authRouter = require('./routes/authRouter');
 
 var app = express();
 
@@ -23,6 +24,7 @@ mongoose.connect('mongodb://localhost/base');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.use(i18n);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -34,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
