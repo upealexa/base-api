@@ -43,7 +43,7 @@ authRouter.post('/login', function(req, res, next){
 });
 
 authRouter.get('/', function(req, res) {
-  console.log(res.__('Hello i18n'));
+  console.log(__('Hello i18n'));
 });
 
 module.exports = authRouter;
